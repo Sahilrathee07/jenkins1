@@ -2,8 +2,8 @@ import unittest
 from src.calci import Calculator
 
 class TestCalculator(unittest.TestCase):
-    def setup(self):
-        self.calculator = Calculator
+    def setUp(self):
+        self.calculator = Calculator()
 
     def test_add(self):
         self.assertEqual(self.calculator.add(3, 5), 8)
