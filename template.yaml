@@ -1,0 +1,12 @@
+AWSTemplateFormatVersion: '2010-09-09'
+
+Resources:
+  MyLambdaFunction1:
+    Type: AWS::Lambda::Function
+    Properties:
+      Handler: lambda_function1.lambda_handler
+      Runtime: python3.12
+      Code:
+        S3Bucket: sahil-bucket-cf-1
+        S3Key: lambda_function1.zip
+      Timeout: 60
