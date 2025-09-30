@@ -12,6 +12,11 @@ Resources:
       Timeout: 60
       Role: !GetAtt LambdaFunction1Role.Arn
 
+  AccountsTopic:
+    Type: AWS::SNS::Topic
+    Properties:
+      TopicName: Accounts-SNS
+    
   LambdaFunction1Role:
     Type: AWS::IAM::Role
     Properties:
