@@ -28,7 +28,7 @@ jobs:
       - name: Run Snyk IAC scan
         env:
           SNYK_TOKEN: ${{ secrets.SNYK_TOKEN }}
-        run: snyk iac test template.yaml --severity-threshold=high
+        run: snyk iac test template.yaml --severity-threshold=low
  
       - name: Deploy to AWS
         if: success()   # only runs if Snyk passes
