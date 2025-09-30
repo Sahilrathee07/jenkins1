@@ -1,9 +1,19 @@
-name: Snyk Scan and Deploy
+name: Snyk Scan and Deploy 2
+
 on:
-  push:
-    branches:
-      - main
- 
+  workflow_dispatch:
+    inputs:
+      stack_name:
+        description: 'Name of the CloudFormation stack'
+        required: true
+        default: 'MyStack'
+      param1:
+        description: 'Value for Parameter1'
+        required: true
+      param2:
+        description: 'Value for Parameter2'
+        required: true
+
 jobs:
   snyk-and-deploy:
     runs-on: ubuntu-latest
@@ -11,15 +21,15 @@ jobs:
     steps:
       - name: Checkout code
         uses: actions/checkout@v4
- 
+
       - name: Set up Node (required for Snyk CLI)
         uses: actions/setup-node@v4
         with:
           node-version: 20
- 
+
       - name: Install Snyk CLI
         run: npm install -g snyk
- 
+
       - name: Run Snyk scan
         env:
           SNYK_TOKEN: ${{ secrets.SNYK_TOKEN }}
@@ -30,8 +40,14 @@ jobs:
           SNYK_TOKEN: ${{ secrets.SNYK_TOKEN }}
         run: snyk iac test template.yaml --severity-threshold=low
 
- 
       - name: Deploy to AWS
         if: success()   # only runs if Snyk passes
         run: |
-          echo "Deploying to AWS..."
+          echo "Deploying to AWS CloudFormation..."
+          # aws cloudformation deploy \
+          #   --stack-name ${{ github.event.inputs.stack_name }} \
+          #   --template-file template.yaml \
+          #   --parameter-overrides \
+          #     Parameter1=${{ github.event.inputs.param1 }} \
+          #     Parameter2=${{ github.event.inputs.param2 }} \
+          #   --capabilities CAPABILITY_NAMED_IAM
