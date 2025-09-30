@@ -3,6 +3,10 @@ name: Snyk Scan and Deploy 2
 on:
   workflow_dispatch:
     inputs:
+      git_tag:
+        description: 'Git tag to deploy'
+        required: true
+        default: 'v1.0.0'
       stack_name:
         description: 'Name of the CloudFormation stack'
         required: true
@@ -21,6 +25,8 @@ jobs:
     steps:
       - name: Checkout code
         uses: actions/checkout@v4
+        with:
+          ref: ${{ github.event.inputs.git_tag }}
 
       - name: Set up Node (required for Snyk CLI)
         uses: actions/setup-node@v4
