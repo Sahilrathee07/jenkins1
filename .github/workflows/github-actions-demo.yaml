@@ -23,7 +23,7 @@ jobs:
       - name: Run Snyk scan
         env:
           SNYK_TOKEN: ${{ secrets.SNYK_TOKEN }}
-        run: snyk test --file=src/requirements.txt --package-manager=pip --severity-threshold=high
+        run: snyk iac test . --severity-threshold=high
  
       - name: Deploy to AWS
         if: success()   # only runs if Snyk passes
