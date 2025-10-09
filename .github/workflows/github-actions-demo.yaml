@@ -25,8 +25,6 @@ jobs:
     steps:
       - name: Checkout code
         uses: actions/checkout@v4
-        with:
-          ref: ${{ github.event.inputs.git_tag }}
 
       - name: Set up Node (required for Snyk CLI)
         uses: actions/setup-node@v4
